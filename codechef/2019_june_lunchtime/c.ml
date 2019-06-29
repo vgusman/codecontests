@@ -46,5 +46,10 @@ end
 
 let () =
   let open Helper in
-  ()
+  let open Big in
+  let t = read_int () in
+  loop t (fun _ ->
+      let chef = Scanf.scanf "%Ld %Ld %Ld\n" (fun x y k -> Int64.rem ((x ++ y) // k) 2L = 0L) in
+      if chef then Printf.printf "Chef\n" else Printf.printf "Paja\n"
+    )
 ;;

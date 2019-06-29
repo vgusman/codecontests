@@ -46,5 +46,26 @@ end
 
 let () =
   let open Helper in
-  ()
+  let open Big in
+  let t = read_int () in
+  loop t
+    (fun _ ->
+       let n = read_int () in
+       let s = ref 0L in
+       let imp_d = ref 0 in
+       loop n
+         (fun _ ->
+            let x = Scanf.scanf "%Ld " (fun x -> x) in
+            s := !s ++ x;
+            if Int64.rem x 2L = 1L then incr imp_d;
+         );
+       loop n
+         (fun _ ->
+            let x = Scanf.scanf "%Ld " (fun x -> x) in
+            s := !s ++ x;
+            if Int64.rem x 2L = 1L then decr imp_d;
+         );
+       let r = abs !imp_d in
+       debug (LInt ((!s -- Int64.of_int r) // 2L ));
+    )
 ;;

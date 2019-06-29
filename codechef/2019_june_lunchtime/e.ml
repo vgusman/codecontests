@@ -46,5 +46,26 @@ end
 
 let () =
   let open Helper in
-  ()
+  let open Big in
+  let t = read_int () in
+  loop t
+    (fun _ ->
+       let a0, b0, c0, a1, b1, c1 = Scanf.scanf "%Ld %Ld %Ld %Ld %Ld %Ld\n" (fun q w e r t y -> q, w, e, r, t, y) in
+       if a0 = a1 && b0 = b1 && c0 = c1 then debug (Int 0)
+       else
+         let all_zeros = a0 = 0L && b0 = 0L && c0 = 0L in
+         let all_goal_zeros = a1 = 0L && b1 = 0L && c1 = 0L in
+         let x, y, z = Int64.abs (a0 -- a1), Int64.abs (b0 -- b1), Int64.abs (c0 -- c1) in
+         let p1, p2, p3 = Int64.rem x 2L = 0L, Int64.rem y 2L = 0L, Int64.rem z 2L = 0L in
+         let res =
+           if all_zeros then
+             if (p1 && p2 && p3) || (not (p1 || p2 || p3)) then 2 else 1
+           else
+           if all_goal_zeros then
+             if (p1 && p2 && p3) || (not (p1 || p2 || p3)) then 2 else 1
+           else
+           if (p1 && p2 && p3) || (not (p1 || p2 || p3)) then 0 else 1
+         in
+         debug (Int res)
+    )
 ;;
