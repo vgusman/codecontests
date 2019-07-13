@@ -18,32 +18,28 @@ int main () {
             cin >> x;
             a.push_back(x);
         }
-        sort(a.begin(), a.end());
-        ll res = 0;
-        for(int j = n-1; j > n-1-z; j--){
-            res += a[j];
+        sort(a.begin(), a.end(), greater<int>());
+        int b[z][n];
+        
+        for(int j = 0; j < n; j++){
+            b[0][j] = a[j] * (j+1);
         }
-        int id = 0;
-        int b[z];
-        int prev = 0;
-        while (id < z) {
-            int x = a[id];
-            int c = 0;
-            while ((id < n) && (a[id]==x)){c++;id++;}
-            //int rr1 = (a[n-z+id-c] == x ? 0 : (n - z + 1 - c));
-            b[id-c]= x + (n-z - c + 1)*(x-prev) - a[n-z+id-c];
-            for (int l = id - c + 1; l< id; l++){
-                int rr2 = a[n-z+l] == x ? 0 : x-prev;    
-                b[l] = x + rr2 - a[n-z+l];
+        
+        for(int k = 1; k < z; k++){
+            for(int j = k; j < n; j++){
+            int minn = b[k-1][j-1] + a[j];
+            for(int l = k-1; l < j-1; l++){
+                int tmp = b[k-1][l] + (j-l)*a[j];
+                if (tmp < minn) {minn = tmp;}
             }
-            prev = x;
+            b[k][j] = minn;
+            }
         }
-        ll cur = res;
-        for(int j = 0; j < z; j++){
-            cur += b[j];
-            if (cur < res) {res = cur;}
+        int minn = b[z-1][z-1];
+        for(int k = z; k < n; k++){
+            if (minn > b[z-1][k]) {minn = b[z-1][k];}
         }
-        cout << res << endl;
+        cout << minn << endl;
     }
     return 0;
 }
