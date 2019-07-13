@@ -6,20 +6,21 @@ typedef long long ll;
 
 int ff (int idx, int n, int NdeadBefore) {
     if (idx < n-1) {return idx;}
-    else {//TODO
-        return ((idx - n + 1) / 2);
+    else {
+        return ((idx - n + 1) * 2);
     }
 }
 
 int main () {
     int t, n, f, Nviv, Ninit, Ndead_beforeJ;
     ll dmin, d, pmin;
-    int a[100000];
+    
     cin >> t;
     vector<int> v;
     for (int i = 0; i<t; i++){
         v.clear();
         cin >> n;
+        int a[n];
         for (int j = 0; j<n-1; j++){
             cin >> a[j];
         }
@@ -45,7 +46,7 @@ int main () {
                 int k = 2;
                 while (Nviv > 2) {
                     if (Nviv % 2 == 0) {
-                        int idx = ff (k/2*(Nviv - 2) + *it, n, Ndead_beforeJ);
+                        int idx = ff (Ninit - 1 - ((Ninit - 1) % k) + *it, n, Ndead_beforeJ);
                         d += a[idx];}
                     k *= 2;
                     if (Nviv % 2 == 0) {Nviv = Nviv / 2 + 1;}
